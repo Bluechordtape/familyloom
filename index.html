@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Family Loom</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Login Screen ──────────────────────────────────────────────────────── -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="36" height="36" viewBox="0 0 24 24">
+        <!-- 4×4 grid logo -->
+        <rect x="1"  y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="13" y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="19" y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="7"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="7"  width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="13" y="7"  width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="19" y="7"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="13" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="13" width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="13" y="13" width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="19" y="13" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="13" y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="19" y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+      </svg>
+      <div>
+        <div class="login-logo-text">Family Loom</div>
+        <div class="login-logo-sub">팀 업무 그래프</div>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="login-form">
+      <input id="loginEmail"    type="email"    placeholder="이메일"   autocomplete="email" required>
+      <input id="loginPassword" type="password" placeholder="비밀번호" autocomplete="current-password" required>
+      <button type="submit" class="btn-login">로그인</button>
+      <button type="button" id="showRegister" class="btn-ghost">초대 코드로 가입</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="register-form" style="display:none">
+      <input id="regName"     type="text"     placeholder="이름"      required>
+      <input id="regEmail"    type="email"    placeholder="이메일"    required>
+      <input id="regPassword" type="password" placeholder="비밀번호 (6자 이상)" required>
+      <input id="regInvite"   type="text"     placeholder="초대 코드" required>
+      <button type="submit" class="btn-login">가입하기</button>
+      <button type="button" id="showLogin" class="btn-ghost">로그인으로</button>
+    </form>
+
+    <p id="loginError" class="login-error"></p>
+  </div>
+</div>
+
+<!-- ── Main App ───────────────────────────────────────────────────────────── -->
+<div id="app" class="app" style="display:none">
+
+  <!-- Mobile Header -->
+  <header class="mobile-header">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <rect x="1"  y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="13" y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="19" y="1"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="7"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="7"  width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="13" y="7"  width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="19" y="7"  width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="13" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="13" width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="13" y="13" width="5" height="5" rx="1" fill="#0D9488" opacity=".4"/>
+        <rect x="19" y="13" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="1"  y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="7"  y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="13" y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+        <rect x="19" y="19" width="5" height="5" rx="1" fill="#0D9488"/>
+      </svg>
+      <span class="logo-text">Family Loom</span>
+    </div>
+    <button class="tb-btn primary admin-only" onclick="document.getElementById('btnAddTask')?.click()">+ 업무</button>
+  </header>
+
+  <!-- Desktop Toolbar (filled by app.js) -->
+  <header id="toolbar" class="toolbar"></header>
+
+  <!-- Status Bar (filled by app.js) -->
+  <div id="statusBar" class="status-bar"></div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Sidebar (filled by app.js) -->
+    <aside id="sidebar" class="sidebar"></aside>
+    <div id="sidebarResizer" class="sidebar-resizer"></div>
+
+    <!-- Graph Canvas -->
+    <div id="canvas"></div>
+
+    <!-- Mobile views (shown via tab bar) -->
+    <div id="mobileStatus"   class="mobile-view" style="display:none"></div>
+    <div id="mobileActivity" class="mobile-view" style="display:none"></div>
+    <div id="mobileSidebar"  class="mobile-view" style="display:none"></div>
+
+    <!-- Edit Panel -->
+    <div id="editPanel" class="edit-panel"></div>
+
+  </div>
+
+  <!-- Mobile Tab Bar -->
+  <nav class="mobile-tabbar">
+    <div class="mobile-tabs">
+      <button class="tab-btn active" data-tab="graph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        그래프
+      </button>
+      <button class="tab-btn" data-tab="status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        현황
+      </button>
+      <button class="tab-btn" data-tab="activity">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+        활동
+      </button>
+      <button class="tab-btn" data-tab="menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        메뉴
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay">
+  <div id="modal" class="modal"></div>
+</div>
+
+<!-- Socket.io client (served by Express + Socket.io) -->
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
