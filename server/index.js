@@ -65,21 +65,25 @@ io.on('connection', (socket) => {
 async function createDefaults() {
   // Default admin account
   const adminHash = await bcrypt.hash('admin1234!', 10);
-  await pool.query(
+  const adminRes = await pool.query(
     `INSERT INTO users (id, name, email, password_hash, role)
      VALUES ('user_admin', '관리자', 'admin@familyloom.app', $1, 'admin')
-     ON CONFLICT (id) DO NOTHING`,
+     ON CONFLICT (id) DO NOTHING
+     RETURNING name`,
     [adminHash]
   );
+  if (adminRes.rowCount > 0) console.log('[Init] 기본 계정 생성:', adminRes.rows[0].name);
 
   // Default member account
   const memberHash = await bcrypt.hash('member1234', 10);
-  await pool.query(
+  const memberRes = await pool.query(
     `INSERT INTO users (id, name, email, password_hash, role)
      VALUES ('user_member', '홍길동', 'member@familyloom.app', $1, 'member')
-     ON CONFLICT (id) DO NOTHING`,
+     ON CONFLICT (id) DO NOTHING
+     RETURNING name`,
     [memberHash]
   );
+  if (memberRes.rowCount > 0) console.log('[Init] 기본 계정 생성:', memberRes.rows[0].name);
 
   // Initial empty workflow data
   const existing = await pool.query('SELECT id FROM workflow_data LIMIT 1');

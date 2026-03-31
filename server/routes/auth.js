@@ -31,17 +31,17 @@ export function adminOnly(req, res, next) {
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ error: '이메일과 비밀번호를 입력하세요.' });
+    const { name, password } = req.body;
+    if (!name || !password) {
+      return res.status(400).json({ error: '이름과 비밀번호를 입력하세요.' });
     }
 
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const result = await pool.query('SELECT * FROM users WHERE name = $1', [name]);
     const user = result.rows[0];
-    if (!user) return res.status(401).json({ error: '이메일 또는 비밀번호가 올바르지 않습니다.' });
+    if (!user) return res.status(401).json({ error: '이름 또는 비밀번호가 올바르지 않습니다.' });
 
     const valid = await bcrypt.compare(password, user.password_hash);
-    if (!valid) return res.status(401).json({ error: '이메일 또는 비밀번호가 올바르지 않습니다.' });
+    if (!valid) return res.status(401).json({ error: '이름 또는 비밀번호가 올바르지 않습니다.' });
 
     const token = jwt.sign(
       { id: user.id, name: user.name, role: user.role, email: user.email },

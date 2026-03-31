@@ -47,11 +47,11 @@ function hideLogin() {
 // Login form
 document.getElementById('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const email    = document.getElementById('loginEmail').value.trim();
+  const name     = document.getElementById('loginName').value.trim();
   const password = document.getElementById('loginPassword').value;
   try {
     setLoginError('');
-    const res = await api.post('/api/auth/login', { email, password });
+    const res = await api.post('/api/auth/login', { name, password });
     setToken(res.token);
     currentUser = res.user;
     await startApp();
